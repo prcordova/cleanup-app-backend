@@ -26,9 +26,16 @@ export class AuthService {
 
   // Realiza login e retorna o token JWT
   async login(user: any) {
-    const payload = { email: user.email, sub: user._id };
+    const payload = {
+      email: user.email,
+      sub: user._id, // Identificador único do usuário
+      role: user.role, // Adiciona o role ao payload
+      name: user.name, // Adiciona o nome ao payload
+    };
+    const token = this.jwtService.sign(payload);
+    console.log('Token Gerado:', token); // Loga o token gerado no console
     return {
-      access_token: this.jwtService.sign(payload),
+      access_token: token,
     };
   }
 
